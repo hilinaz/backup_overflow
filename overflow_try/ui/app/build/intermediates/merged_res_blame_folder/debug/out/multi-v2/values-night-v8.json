@@ -11,7 +11,7 @@
                         "startOffsets": "57",
                         "endLines": "13",
                         "endColumns": "12",
-                        "endOffsets": "718"
+                        "endOffsets": "725"
                     },
                     "to": {
                         "startLines": "2",
@@ -19,31 +19,7 @@
                         "startOffsets": "55",
                         "endLines": "13",
                         "endColumns": "12",
-                        "endOffsets": "619"
-                    }
-                }
-            ]
-        },
-        {
-            "outputFile": "C:\\Users\\HP Laptop 15\\.gradle\\daemon\\8.11.1\\com.frontendmasters.campusoverflow.app-mergeDebugResources-48:\\values-night-v8\\values-night-v8.xml",
-            "map": [
-                {
-                    "source": "C:\\Users\\HP Laptop 15\\Desktop\\backup_overflow\\overflow_try\\ui\\app\\src\\main\\res\\values-night\\themes.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "57",
-                        "endLines": "13",
-                        "endColumns": "12",
-                        "endOffsets": "766"
-                    },
-                    "to": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endLines": "13",
-                        "endColumns": "12",
-                        "endOffsets": "667"
+                        "endOffsets": "626"
                     }
                 }
             ]

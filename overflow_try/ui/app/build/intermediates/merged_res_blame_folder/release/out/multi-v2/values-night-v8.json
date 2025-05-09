@@ -1,0 +1,28 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.frontendmasters.campusoverflow.app-mergeReleaseResources-44:/values-night-v8/values-night-v8.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\HP Laptop 15\\Desktop\\backup_overflow\\overflow_try\\ui\\app\\src\\main\\res\\values-night\\themes.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "57",
+                        "endLines": "13",
+                        "endColumns": "12",
+                        "endOffsets": "725"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "13",
+                        "endColumns": "12",
+                        "endOffsets": "626"
+                    }
+                }
+            ]
+        }
+    ]
+}
