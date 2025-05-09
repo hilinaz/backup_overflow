@@ -42,6 +42,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.frontendmasters.campusoverflow.LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.CampusOverflow" />
+        <activity
+            android:name="com.frontendmasters.campusoverflow.RegistrationActivity"
+            android:exported="false"
+            android:theme="@style/Theme.CampusOverflow" />
 
         <provider
             android:name="androidx.startup.InitializationProvider"
