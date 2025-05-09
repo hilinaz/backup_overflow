@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
 import com.frontendmasters.campusoverflow.navigation.NavGraph
 import com.frontendmasters.campusoverflow.ui.theme.CampusOverflowTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,7 +22,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavGraph(navController = rememberNavController())
+                    val navController = rememberNavController()
+                    NavGraph(navController = navController)
                 }
             }
         }
