@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.CampusOverflow" parent="Theme.Material3.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="android:colorPrimary">@color/purple_200</item>
+        <item name="android:colorPrimaryVariant">@color/purple_700</item>
+        <item name="android:colorOnPrimary">@color/black</item>
+        <!-- Secondary brand color. -->
+        <item name="android:colorSecondary">@color/teal_200</item>
+        <item name="android:colorSecondaryVariant">@color/teal_200</item>
+        <item name="android:colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+    </style>
+</resources> 
