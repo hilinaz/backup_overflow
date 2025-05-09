@@ -4,39 +4,42 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.frontendmasters.campusoverflow.model.User
 import com.frontendmasters.campusoverflow.model.UserRole
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SignInViewModel : ViewModel() {
-
-    private val _uiState = MutableStateFlow<SignInUiState>(SignInUiState.Initial)
-    val uiState: StateFlow<SignInUiState> = _uiState
-
-    // Mock user data for demonstration
-    private val mockUsers = listOf(
-        User("admin", "admin@campus.com", UserRole.ADMIN),
-        User("user1", "user1@campus.com", UserRole.USER),
-        User("user2", "user2@campus.com", UserRole.USER)
-    )
+@HiltViewModel
+class SignInViewModel @Inject constructor() : ViewModel() {
+    private val _signInState = MutableStateFlow<SignInState>(SignInState.Initial)
+    val signInState: StateFlow<SignInState> = _signInState
 
     fun signIn(email: String, password: String) {
         viewModelScope.launch {
-            _uiState.value = SignInUiState.Loading
-            // Simulate authentication (no real password check for mock)
-            val user = mockUsers.find { it.email == email }
-            if (user != null) {
-                _uiState.value = SignInUiState.Success(user)
-            } else {
-                _uiState.value = SignInUiState.Error("Invalid email or password")
+            _signInState.value = SignInState.Loading
+            try {
+                // TODO: Implement actual sign in logic with your API
+                // For now, using mock data
+                val user = User(
+                    id = 1,
+                    firstName = "John",
+                    lastName = "Doe",
+                    username = "johndoe",
+                    email = email,
+                    role = UserRole.STUDENT
+                )
+                _signInState.value = SignInState.Success(user)
+            } catch (e: Exception) {
+                _signInState.value = SignInState.Error(e.message ?: "Sign in failed")
             }
         }
     }
 }
 
-sealed class SignInUiState {
-    object Initial : SignInUiState()
-    object Loading : SignInUiState()
-    data class Success(val user: User) : SignInUiState()
-    data class Error(val message: String) : SignInUiState()
+sealed class SignInState {
+    object Initial : SignInState()
+    object Loading : SignInState()
+    data class Success(val user: User) : SignInState()
+    data class Error(val message: String) : SignInState()
 } 

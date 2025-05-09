@@ -1,70 +1,114 @@
 package com.frontendmasters.campusoverflow.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.frontendmasters.campusoverflow.*
-import com.frontendmasters.campusoverflow.ui.dashboard.DashboardScreen
+import com.frontendmasters.campusoverflow.model.User
 import com.frontendmasters.campusoverflow.model.UserRole
-import com.frontendmasters.campusoverflow.model.DashboardStats
-import com.frontendmasters.campusoverflow.auth.AuthState
 import com.frontendmasters.campusoverflow.ui.screens.*
 
 sealed class Screen(val route: String) {
-    object Welcome : Screen("welcome")
-    object SignIn : Screen("signin")
-    object SignUp : Screen("signup")
-    object Dashboard : Screen("dashboard/{role}") {
-        fun createRoute(role: UserRole) = "dashboard/${role.name}"
+    object Login : Screen("login")
+    object Register : Screen("register")
+    object Home : Screen("home")
+    object Profile : Screen("profile")
+    object QuestionDetail : Screen("question/{questionId}") {
+        fun createRoute(questionId: Int) = "question/$questionId"
     }
-    object Questions : Screen("questions/{role}/{userName}") {
-        fun createRoute(role: UserRole, userName: String) = "questions/${role.name}/$userName"
+    object AnswerList : Screen("answers/{questionId}") {
+        fun createRoute(questionId: Int) = "answers/$questionId"
     }
-    object AdminQuestions : Screen("admin/questions")
-    object Answers : Screen("answers/{questionId}")
-    object UserList : Screen("admin/users")
 }
 
 @Composable
 fun NavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = NavigationRoutes.Login.route
+        startDestination = Screen.Login.route
     ) {
-        composable(NavigationRoutes.Login.route) {
-            LoginScreen(navController)
+        composable(Screen.Login.route) {
+            LoginScreen(
+                onSignInSuccess = { user ->
+                    when (user.role) {
+                        UserRole.ADMIN -> navController.navigate(Screen.Home.route) {
+                            popUpTo(Screen.Login.route) { inclusive = true }
+                        }
+                        UserRole.TEACHER -> navController.navigate(Screen.Home.route) {
+                            popUpTo(Screen.Login.route) { inclusive = true }
+                        }
+                        UserRole.STUDENT -> navController.navigate(Screen.Home.route) {
+                            popUpTo(Screen.Login.route) { inclusive = true }
+                        }
+                    }
+                },
+                onRegisterClick = {
+                    navController.navigate(Screen.Register.route)
+                }
+            )
         }
-        
-        composable(NavigationRoutes.Register.route) {
-            RegisterScreen(navController)
+
+        composable(Screen.Register.route) {
+            RegisterScreen(
+                onRegisterSuccess = { user ->
+                    when (user.role) {
+                        UserRole.ADMIN -> navController.navigate(Screen.Home.route) {
+                            popUpTo(Screen.Login.route) { inclusive = true }
+                        }
+                        UserRole.TEACHER -> navController.navigate(Screen.Home.route) {
+                            popUpTo(Screen.Login.route) { inclusive = true }
+                        }
+                        UserRole.STUDENT -> navController.navigate(Screen.Home.route) {
+                            popUpTo(Screen.Login.route) { inclusive = true }
+                        }
+                    }
+                },
+                onLoginClick = {
+                    navController.navigateUp()
+                }
+            )
         }
-        
-        composable(NavigationRoutes.QuestionList.route) {
-            QuestionListScreen(navController)
+
+        composable(Screen.Home.route) {
+            HomeScreen(
+                onQuestionClick = { questionId ->
+                    navController.navigate(Screen.QuestionDetail.createRoute(questionId))
+                },
+                onProfileClick = {
+                    navController.navigate(Screen.Profile.route)
+                }
+            )
         }
-        
-        composable(NavigationRoutes.QuestionDetail.route) { backStackEntry ->
-            val questionId = backStackEntry.arguments?.getString("questionId")
-            questionId?.let {
-                QuestionDetailScreen(navController, it)
-            }
+
+        composable(Screen.Profile.route) {
+            ProfileScreen(
+                onBackClick = {
+                    navController.navigateUp()
+                }
+            )
         }
-        
-        composable(NavigationRoutes.CreateQuestion.route) {
-            CreateQuestionScreen(navController)
+
+        composable(Screen.QuestionDetail.route) { backStackEntry ->
+            val questionId = backStackEntry.arguments?.getString("questionId")?.toIntOrNull() ?: return@composable
+            QuestionDetailScreen(
+                questionId = questionId,
+                onBackClick = {
+                    navController.navigateUp()
+                },
+                onViewAnswersClick = { questionId ->
+                    navController.navigate(Screen.AnswerList.createRoute(questionId))
+                }
+            )
         }
-        
-        composable(NavigationRoutes.UserProfile.route) {
-            UserProfileScreen(navController)
-        }
-        
-        composable(NavigationRoutes.AnswerList.route) { backStackEntry ->
-            val questionId = backStackEntry.arguments?.getString("questionId")
-            questionId?.let {
-                AnswerListScreen(navController, it)
-            }
+
+        composable(Screen.AnswerList.route) { backStackEntry ->
+            val questionId = backStackEntry.arguments?.getString("questionId")?.toIntOrNull() ?: return@composable
+            AnswerListScreen(
+                questionId = questionId,
+                onBackClick = {
+                    navController.navigateUp()
+                }
+            )
         }
     }
 } 
