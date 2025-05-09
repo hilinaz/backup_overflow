@@ -2,7 +2,14 @@
 const express = require("express")
 const app = express()
 const cors = require("cors")
-app.use(cors())
+
+// Configure CORS to allow all origins
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}))
+
 const usersRoutes = require("./routes/userRoutes")
 const questionRoutes = require("./routes/questionRoute")
 const answerRoutes = require("./routes/answerRoutes")

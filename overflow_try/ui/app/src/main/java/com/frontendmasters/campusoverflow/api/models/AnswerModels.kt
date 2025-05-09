@@ -10,4 +10,10 @@ data class Answer(
 
 data class AnswerStats(
     val totalAnswers: Int
+)
+
+data class PostAnswerRequest(
+    val answer: String,
+    val questionid: String,
+    val userid: String
 ) 

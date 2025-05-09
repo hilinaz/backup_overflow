@@ -6,50 +6,50 @@ import retrofit2.http.*
 
 interface ApiService {
     // User endpoints
-    @POST("user/register")
+    @POST("api/users/register")
     suspend fun register(@Body request: RegisterRequest): Response<ApiResponse<User>>
     
-    @POST("user/login")
+    @POST("api/users/login")
     suspend fun login(@Body request: LoginRequest): Response<ApiResponse<User>>
     
-    @GET("user/check")
+    @GET("api/users/check")
     suspend fun checkUser(): Response<ApiResponse<User>>
     
-    @GET("user/getFullName")
+    @GET("api/users/getFullName")
     suspend fun getFullName(): Response<ApiResponse<String>>
     
-    @GET("user/getUserStats")
+    @GET("api/users/getUserStats")
     suspend fun getUserStats(): Response<ApiResponse<UserStats>>
     
-    @GET("user/getAllUserNamesAndProfessions")
+    @GET("api/users/getAllUserNamesAndProfessions")
     suspend fun getAllUserNamesAndProfessions(): Response<ApiResponse<List<User>>>
     
     // Question endpoints
-    @POST("question")
+    @POST("api/question")
     suspend fun createQuestion(@Body request: CreateQuestionRequest): Response<ApiResponse<Question>>
     
-    @GET("question")
+    @GET("api/question")
     suspend fun getAllQuestions(): Response<ApiResponse<List<Question>>>
     
-    @GET("question/countQuestions")
+    @GET("api/question/countQuestions")
     suspend fun countQuestions(): Response<ApiResponse<Int>>
     
-    @GET("question/{question_id}")
+    @GET("api/question/{question_id}")
     suspend fun getSingleQuestion(@Path("question_id") questionId: String): Response<ApiResponse<Question>>
     
-    @GET("question/search/{search}")
+    @GET("api/question/search/{search}")
     suspend fun searchQuestions(@Path("search") searchQuery: String): Response<ApiResponse<List<Question>>>
     
-    @DELETE("question/{questionid}")
+    @DELETE("api/question/{questionid}")
     suspend fun deleteQuestion(@Path("questionid") questionId: String): Response<ApiResponse<Unit>>
     
     // Answer endpoints
-    @POST("answer")
-    suspend fun postAnswer(@Body answer: String): Response<ApiResponse<Answer>>
+    @POST("api/answer")
+    suspend fun postAnswer(@Body request: PostAnswerRequest): Response<ApiResponse<Answer>>
     
-    @GET("answer/getAnswerStats")
+    @GET("api/answer/getAnswerStats")
     suspend fun getAnswerStats(): Response<ApiResponse<AnswerStats>>
     
-    @GET("answer/{questionid}")
+    @GET("api/answer/{questionid}")
     suspend fun getAnswersForQuestion(@Path("questionid") questionId: String): Response<ApiResponse<List<Answer>>>
 } 
